@@ -11,6 +11,7 @@ public class Main {
     @SuppressWarnings("deprecation")
 	public static void main(String[] args) throws Throwable {
         try {
+        
             
             BazaKontrolaTowar bazaTowary = new BazaKontrolaTowar();
             Towar towar = new Towar();

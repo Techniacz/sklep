@@ -5,13 +5,11 @@ import bazaKontrola.*;
 import encje.*;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main {
 
     @SuppressWarnings("deprecation")
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Throwable {
         try {
             
             BazaKontrolaTowar bazaTowary = new BazaKontrolaTowar();
@@ -19,9 +17,9 @@ public class Main {
             towar.setCena(100.0);
             towar.setNazwa("Walkmen");
 
-            bazaTowary.create(towar);   // utworzenie pojazdu metoda przyjmujaca obiekt
+            bazaTowary.create(towar);   
             towar.setId(bazaTowary.getLastId());
-            bazaTowary.create("Odkurzacz", 50.0); // utworzenie pojazdu metoda przyjmujaca parametry
+            bazaTowary.create("Odkurzacz", 50.0); 
             
             BazaKontrolaKlient bazaKlienci = new BazaKontrolaKlient();
             Klient klient = new Klient();
@@ -31,7 +29,7 @@ public class Main {
             
             bazaKlienci.create(klient);
 
-            bazaKlienci.create("Leszek", "Szreder", 650120044 );
+            bazaKlienci.create("Michal", "Niewiarowski", 650120044 );
 
             BazaKontrolaSprzedawca bazaSprzedawcy = new BazaKontrolaSprzedawca();
             Sprzedawca sprzedawca = new Sprzedawca();
@@ -45,7 +43,7 @@ public class Main {
             bazaSprzedawcy.create("Wojciech", "Dab", 880214525, 1200);
            
             
-            int k_z = 100; // klienta id do zamowienia
+            int k_z = 264; // klienta id do zamowienia
             int s_z = 100; // sprzedawcy id do zamowienia
             int t_z = 178; // towar id do zamowienia
             int i_z = 2;   // ilosc zamawianych produktow
@@ -64,7 +62,7 @@ public class Main {
             System.out.println("Ilosc zamowien zlozonych przez klientow: " + bazaZamowienia.getZamowienia().size());
             
             
-            int k_i = 100; // id klienta, dla ktorego sprawdzamy liczbe zamowien
+            int k_i = 264; // id klienta, dla ktorego sprawdzamy liczbe zamowien
             klient = BazaKontrolaKlient.getKlientById(k_i);
             
             Integer licznik = 0;
@@ -80,8 +78,8 @@ public class Main {
 
 
         } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        BazaKontrolaPolaczenie.killConnection();
     }
+    
 }

@@ -11,13 +11,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+
 
 public class BazaKontrolaZamowienie {
 Zamowienie zamowienie = null;
     
-    public void create(Zamowienie zamowienie) throws SQLException {
+    public void create(Zamowienie zamowienie) throws Throwable {
         this.zamowienie = zamowienie;
         if (zapiszWBaza()) {
             BazaKontrolaTowar bazaTowar = new BazaKontrolaTowar();
@@ -30,7 +30,7 @@ Zamowienie zamowienie = null;
         }
     }
     
-    public void create(int numer, Klient klient, Sprzedawca sprzedawca, Towar towar, int ilosc, Date data_zakupu) throws SQLException {
+    public void create(int numer, Klient klient, Sprzedawca sprzedawca, Towar towar, int ilosc, Date data_zakupu) throws Throwable {
         zamowienie = new Zamowienie(numer, klient, sprzedawca, towar, ilosc, data_zakupu);
         if (zapiszWBaza()) {
             BazaKontrolaTowar bazaTowar = new BazaKontrolaTowar();
@@ -39,12 +39,11 @@ Zamowienie zamowienie = null;
             BazaKontrolaSprzedawca bazaSprzedawca = new BazaKontrolaSprzedawca();
             bazaSprzedawca.aktualizujWBaza(sprzedawca);
             
-          //  BazaKontrolaKlient bazaKlient = new BazaKontrolaKlient();
-           // bazaKlient.aktualizujWBaza(klient);
+       
         }
     }
     
-    private boolean zapiszWBaza() throws SQLException {
+    private boolean zapiszWBaza() throws Throwable {
         try {
             String query = "INSERT INTO `sklep`.`zamowienie` (`data_zakupu`,`id_tow`, `id_kli`, `id_spr`, `ilosc`, `numer`) VALUES ('" + this.zamowienie.getData_zakupu() + "', '" + this.zamowienie.getTowar().getId() + "', '" + this.zamowienie.getKlient().getId() + "', '" + this.zamowienie.getSprzedawca().getId() + "', '" + this.zamowienie.getIlosc() + "', '" + this.zamowienie.getNumer() + "');";
             Connection pol = BazaKontrolaPolaczenie.getPol();
@@ -52,12 +51,12 @@ Zamowienie zamowienie = null;
             st.executeUpdate(query);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(BazaKontrolaZamowienie.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
         return false;
     }
     
-    public void aktualizujWBaza(Zamowienie zamowienie) {
+    public void aktualizujWBaza(Zamowienie zamowienie) throws Throwable {
         this.zamowienie = zamowienie;
         try {
             String query = "UPDATE `sklep`.`zamowienie` SET `data_zakupu`='" + this.zamowienie.getData_zakupu() + "', `id_tow`='" + this.zamowienie.getTowar().getId() + "', `id_kli`='" + this.zamowienie.getKlient().getId() + "', `id_spr`='" + this.zamowienie.getSprzedawca().getId() + "', `ilosc`='" + this.zamowienie.getIlosc() + "',`numer`='" + this.zamowienie.getNumer() + "' WHERE `id`='" + this.zamowienie.getId() + "';";
@@ -65,11 +64,11 @@ Zamowienie zamowienie = null;
             Statement st = pol.createStatement();
             st.executeUpdate(query);
         } catch (SQLException ex) {
-            Logger.getLogger(BazaKontrolaZamowienie.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }
     
-    public void usunZBaza(Zamowienie zamowienie) {
+    public void usunZBaza(Zamowienie zamowienie) throws Throwable {
         this.zamowienie = zamowienie;
         try {
             String query = "DELETE FROM `sklep`.`zamowienie` WHERE `id`= " + this.zamowienie.getId() + ";";
@@ -77,11 +76,11 @@ Zamowienie zamowienie = null;
             Statement st = con.createStatement();
             st.executeUpdate(query);
         } catch (SQLException ex) {
-            Logger.getLogger(BazaKontrolaZamowienie.class.getName()).log(Level.SEVERE, null, ex);
+          
         }
     }
     
-    public List<Zamowienie> getZamowienia() {
+    public List<Zamowienie> getZamowienia() throws Throwable {
         List<Zamowienie> zamowienia = new ArrayList<Zamowienie>();
         try {
             Connection pol = BazaKontrolaPolaczenie.getPol();
@@ -98,12 +97,12 @@ Zamowienie zamowienie = null;
                 zamowienia.add(zamowienie);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BazaKontrolaZamowienie.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
         return zamowienia;
     }
     
-    public List<Zamowienie> getZamowieniaByKlient(Klient klient) {
+    public List<Zamowienie> getZamowieniaByKlient(Klient klient) throws Throwable {
         List<Zamowienie> zamowienia = new ArrayList<Zamowienie>();
         try {
             Connection pol = BazaKontrolaPolaczenie.getPol();
@@ -120,7 +119,7 @@ Zamowienie zamowienie = null;
                 zamowienia.add(zamowienie);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BazaKontrolaZamowienie.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
         return zamowienia;
     }

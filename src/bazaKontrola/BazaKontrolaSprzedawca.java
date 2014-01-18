@@ -12,17 +12,17 @@ public class BazaKontrolaSprzedawca {
 
     Sprzedawca sprzedawca = null;
 
-    public void create(Sprzedawca sprzedawca) {
+    public void create(Sprzedawca sprzedawca) throws Throwable {
         this.sprzedawca = sprzedawca;
         zapiszWBaza();
     }
 
-    public void create(String imie, String nazwisko, int pesel, double placa) {
+    public void create(String imie, String nazwisko, int pesel, double placa) throws Throwable {
         sprzedawca = new Sprzedawca(imie, nazwisko, pesel, placa);
         zapiszWBaza();
     }
 
-    private void zapiszWBaza() {
+    private void zapiszWBaza() throws Throwable {
         try {
             String query = "INSERT INTO `sklep`.`sprzedawca` (`imie`, `nazwisko`, `placa`, `pesel`) VALUES ('" + this.sprzedawca.getImie() + "', '" + this.sprzedawca.getNazwisko() + "', '" + this.sprzedawca.getPlaca() + "', '" + this.sprzedawca.getPesel() + "');";
             Connection pol = BazaKontrolaPolaczenie.getPol();
@@ -33,7 +33,7 @@ public class BazaKontrolaSprzedawca {
         }
     }
 
-    public void aktualizujWBaza(Sprzedawca sprzedawca) {
+    public void aktualizujWBaza(Sprzedawca sprzedawca) throws Throwable {
         this.sprzedawca = sprzedawca;
         try {
             String query = "UPDATE `sklep`.`sprzedawca` SET `imie`='" + this.sprzedawca.getImie() + "', `nazwisko`='" + this.sprzedawca.getNazwisko() + "', `placa`='" + this.sprzedawca.getPlaca() + "', `pesel`='" + this.sprzedawca.getPesel() + "' WHERE `id`='" + this.sprzedawca.getId() + "';";
@@ -45,7 +45,7 @@ public class BazaKontrolaSprzedawca {
         }
     }
 
-    public static Sprzedawca getSprzedawcaById(Integer id) {
+    public static Sprzedawca getSprzedawcaById(Integer id) throws Throwable {
         Sprzedawca sprzedawca = new Sprzedawca();
         try {
             Connection pol = BazaKontrolaPolaczenie.getPol();
